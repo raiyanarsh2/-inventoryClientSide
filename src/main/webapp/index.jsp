@@ -1,0 +1,157 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4e54c8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #3e42a1;
+    }
+
+    #errorMsg {
+      color: red;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .switch-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .switch-link button {
+      background: none;
+      color: #4e54c8;
+      border: none;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login to Inventory System</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="custId">Customer ID</label>
+        <input type="number" id="custId" placeholder="Enter your Customer ID" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required />
+      </div>
+      <button type="submit">Login</button>
+      <p id="errorMsg"></p>
+    </form>
+    <div class="switch-link">
+      <p>Don't have an account?</p>
+      <button onclick="window.location.href='register.jsp'">Register</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const id = document.getElementById("custId").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      fetch("http://localhost:3010/api/customers/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id, password })
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Invalid credentials");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        alert("Login successful!");
+        window.location.href = "home.jsp";
+      })
+      .catch((error) => {
+        document.getElementById("errorMsg").textContent = error.message;
+      });
+    });
+  </script>
+</body>
+</html>
