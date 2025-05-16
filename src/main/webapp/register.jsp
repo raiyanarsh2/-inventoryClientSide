@@ -103,8 +103,7 @@ button:hover {
 	text-decoration: underline;
 }
 
-@
-keyframes fadeIn {from { opacity:0;
+@keyframes fadeIn {from { opacity:0;
 	transform: translateY(-20px);
 }
 

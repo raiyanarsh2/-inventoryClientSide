@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,7 +120,7 @@
     </form>
     <div class="switch-link">
       <p>Don't have an account?</p>
-      <button onclick="window.location.href='register.jsp'">Register</button>
+      <button onclick="window.location.href='register.html'">Register</button>
     </div>
   </div>
 
@@ -146,7 +146,8 @@
       })
       .then((data) => {
         alert("Login successful!");
-        window.location.href = "home.jsp";
+        localStorage.setItem("customerId", data.id);
+        window.location.href = "home.html";
       })
       .catch((error) => {
         document.getElementById("errorMsg").textContent = error.message;

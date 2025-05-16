@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Profile</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6fa;
+            color: #333;
+        }
+
+        nav {
+            background-color: #4e54c8;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-left h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-right input {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            color: #4e54c8;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-icon:hover {
+            background: #e1e4f0;
+        }
+
+        .nav-icon a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: left;
+            font-size: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar button.active,
+        .sidebar button:hover {
+            background-color: #4e54c8;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .order-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .order-card ul {
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+
+        .input:focus {
+            border-color: #4e54c8;
+            outline: none;
+            box-shadow: 0 0 0 2px #ececff;
+        }
+
+        .submit-btn {
+            background-color: #4e54c8;
+            color: white;
+            padding: 10px 18px;
+            font-size: 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #3c41b2;
+        }
+
+        .form-wrapper {
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            /* height: 100%; */
+        }
+
+        .form-wrapper>div {
+            width: 60%;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #updateForm {
+            width: 100%;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            background-color: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #4338ca;
+        }
+
+        .cancel-btn {
+            color: red;
+            border: 1px solid red;
+            background: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: rgba(255, 0, 0, 0.05);
+        }
+
+        .order-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            padding: 20px;
+        }
+
+        .order-card {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+
+        .order-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .cancel-btn {
+            color: #dc2626;
+            border: 1px solid #dc2626;
+            background: transparent;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .cancel-btn:hover {
+            background-color: rgba(220, 38, 38, 0.05);
+        }
+
+        .order-status {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background-color: #e0f2fe;
+            color: #0284c7;
+            margin-bottom: 8px;
+        }
+
+        .order-card p {
+            margin: 0;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .order-card h4 {
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .order-card ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .order-footer {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e5e7eb;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #111827;
+        }
+
+        .item-table {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            background-color: #f3f4f6;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-header {
+            font-weight: 600;
+            background-color: #e5e7eb;
+            border-radius: 6px;
+        }
+
+        .order-wrapper {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            background-color: #f9fafb;
+            max-width: 700px;
+            font-family: Arial, sans-serif;
+            width: 100%;
+        }
+
+        .order-status {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .order-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .order-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1 1 auto;
+        }
+
+        .item-box {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-box img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 10px;
+        }
+
+        .item-info .arrival {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .item-info .time-slot {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin: 2px 0 0 0;
+        }
+
+        .order-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            min-width: 150px;
+        }
+
+        .track-btn {
+            background-color: #6dbb3c;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .track-btn:hover {
+            background-color: #5a9c30;
+        }
+
+        .link {
+            font-size: 0.85rem;
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .cancel-btn {
+            color: red;
+            border: 1px solid red;
+            background: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #374151;
+        }
+
+        .order-total {
+            color: #16a34a;
+            /* green */
+        }
+
+        .item-info .arrival {
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .invoice-btn {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .invoice-btn:hover {
+            background-color: #1e40af;
+        }
+
+        /* Container holding all orders */
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* centers horizontally */
+            gap: 20px;
+            padding: 20px;
+            max-width: 800px;
+            /* max width for card container */
+            margin: 0 auto;
+            /* center the whole container horizontally */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-left">
+            <h1>Inventory</h1>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Search products..." />
+            <div class="nav-icon">
+                <a href="profile.html"><i data-lucide="user"></i><span>Profile</span></a>
+            </div>
+            <div class="nav-icon">
+                <a href="cart.html"><i data-lucide="shopping-cart"></i><span>Cart</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Profile</h2>
+            <button id="ordersBtn" class="active">Order List</button>
+            <button id="updateBtn">Update Profile</button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="main-content" id="mainContent">
+            <!-- Loaded by JS -->
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        lucide.createIcons();
+
+        const ordersBtn = document.getElementById("ordersBtn");
+        const updateBtn = document.getElementById("updateBtn");
+        const mainContent = document.getElementById("mainContent");
+
+        const customerId = localStorage.getItem("customerId");
+
+        if (!customerId) {
+            mainContent.innerHTML = "<p style='color:red;'>Please log in first.</p>";
+        } else {
+            fetchOrders(); // Default tab
+        }
+
+        ordersBtn.addEventListener("click", () => {
+            setActive(ordersBtn);
+            fetchOrders();
+        });
+
+        updateBtn.addEventListener("click", () => {
+            setActive(updateBtn);
+            showUpdateForm();
+        });
+
+        function setActive(activeButton) {
+            document.querySelectorAll(".sidebar button").forEach(btn => btn.classList.remove("active"));
+            activeButton.classList.add("active");
+        }
+
+        // async function fetchOrders() {
+        //     mainContent.innerHTML = "<h2>Loading Order List...</h2>";
+
+        //     try {
+        //         const res = await fetch(`http://localhost:3010/api/orders`);
+        //         const orders = await res.json();
+
+        //         if (!Array.isArray(orders) || orders.length === 0) {
+        //             mainContent.innerHTML = "<h3>No orders found.</h3>";
+        //             return;
+        //         }
+
+        //         let html = `<h2>Your Orders</h2><div class="order-list">`;
+
+        //         orders.forEach(order => {
+        //             html += `
+        //     <div class="order-card">
+        //       <h3>Order #${order.id}</h3>
+        //       <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleString()}</p>
+        //       <p><strong>Total:</strong> ₹${order.totalAmount}</p>
+        //       <h4>Items:</h4>
+        //       <ul>
+        //         ${order.orderItems.map(oi => `
+        //           <li>
+        //             ${oi.item.name} - ₹${oi.priceAtOrder} x ${oi.quantity} 
+        //             = ₹${oi.priceAtOrder * oi.quantity}
+        //           </li>
+        //         `).join("")}
+        //       </ul>
+        //     </div>
+        //   `;
+        //         });
+
+        //         html += `</div>`;
+        //         mainContent.innerHTML = html;
+
+        //     } catch (err) {
+        //         console.error("Failed to fetch orders:", err);
+        //         mainContent.innerHTML = "<p style='color:red;'>Could not load orders. Try again later.</p>";
+        //     }
+        // }
+
+        //         async function fetchOrders() {
+        //             mainContent.innerHTML = "<h2>Loading Order List...</h2>";
+
+        //             try {
+        //                 const res = await fetch(`http://localhost:3010/api/orders`);
+        //                 const orders = await res.json();
+
+        //                 if (!Array.isArray(orders) || orders.length === 0) {
+        //                     mainContent.innerHTML = "<h3>No orders found.</h3>";
+        //                     return;
+        //                 }
+
+        //                 let html = `<h2>Your Orders</h2><div class="order-list">`;
+
+        //                 orders.forEach(order => {
+        //                     html += `
+        //             <div class="order-card" data-order-id="${order.id}">
+        //                 <div style="
+        //     display: flex;
+        //     justify-content: space-between;
+        // ">
+        //               <h3>Order #${order.id}
+        //                 </h3><button class="cancel-btn" data-id="${order.id}">Cancel</button>
+        //                 </div>
+        //               <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleString()}</p>
+        //               <p><strong>Total:</strong> ₹${order.totalAmount}</p>
+        //               <h4>Items:</h4>
+        //               <ul>
+        //                 ${order.orderItems.map(oi => `
+        //                   <li>
+        //                     ${oi.item.name} - ₹${oi.priceAtOrder} x ${oi.quantity} 
+        //                     = ₹${oi.priceAtOrder * oi.quantity}
+        //                   </li>
+        //                 `).join("")}
+        //               </ul>
+
+        //             </div>
+        //           `;
+        //                 });
+
+        //                 html += `</div>`;
+        //                 mainContent.innerHTML = html;
+
+        //                 // Add event listeners to cancel buttons
+        //                 document.querySelectorAll(".cancel-btn").forEach(btn => {
+        //                     btn.addEventListener("click", async (e) => {
+        //                         const orderId = e.target.getAttribute("data-id");
+
+        //                         if (confirm(`Cancel Order #${orderId}?`)) {
+        //                             try {
+        //                                 const response = await fetch(`http://localhost:3010/api/orders/${orderId}`, {
+        //                                     method: "DELETE",
+        //                                 });
+
+        //                                 if (response.ok) {
+        //                                     alert(`Order #${orderId} canceled.`);
+        //                                     fetchOrders(); // Refresh order list
+        //                                 } else {
+        //                                     const errorData = await response.json();
+        //                                     alert(`Failed to cancel: ${errorData.message || 'Unknown error'}`);
+        //                                 }
+        //                             } catch (error) {
+        //                                 console.error("Cancel failed:", error);
+        //                                 alert("Network error. Try again.");
+        //                             }
+        //                         }
+        //                     });
+        //                 });
+
+        //             } catch (err) {
+        //                 console.error("Failed to fetch orders:", err);
+        //                 mainContent.innerHTML = "<p style='color:red;'>Could not load orders. Try again later.</p>";
+        //             }
+        //         }
+
+        //         async function fetchOrders() {
+        //             mainContent.innerHTML = "<h2>Loading Order List...</h2>";
+
+        //             try {
+        //                 const res = await fetch(`http://localhost:3010/api/orders`);
+        //                 const orders = await res.json();
+
+        //                 if (!Array.isArray(orders) || orders.length === 0) {
+        //                     mainContent.innerHTML = "<h3>No orders found.</h3>";
+        //                     return;
+        //                 }
+
+        //                 let html = `<h2 style="margin-bottom: 16px;">Your Orders</h2><div class="order-list">`;
+
+        //                 orders.forEach((order, index) => {
+        //                     // Just for demo purposes - rotate between statuses
+        //                     const statuses = ["Confirmed", "Dispatched", "Out for Delivery", "Delivered"];
+        //                     const currentStatus = statuses[index % statuses.length];
+        //                     let statusColor = {
+        //                         Confirmed: "#3b82f6",
+        //                         Dispatched: "#f97316",
+        //                         "Out for Delivery": "#facc15",
+        //                         Delivered: "#10b981"
+        //                     }[currentStatus] || "#6b7280";
+
+        //                     html += `
+        //             <div class="order-card" data-order-id="${order.id}">
+        //                 <div class="order-header">
+        //                     <h3>Order #${order.id}</h3>
+        //                     <button class="cancel-btn" data-id="${order.id}">Cancel</button>
+        //                 </div>
+        //                 <div class="order-status" style="background-color: ${statusColor}20; color: ${statusColor};">
+        //                     ${currentStatus}
+        //                 </div>
+        //                 <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleString()}</p>
+        //                 <p><strong>Total:</strong> ₹${order.totalAmount}</p>
+        //                 <h4>🛒 Items:</h4>
+        // <div class="item-table">
+        //   <div class="item-row item-header">
+        //     <span>Item</span>
+        //     <span>Qty</span>
+        //     <span>Price</span>
+        //     <span>Total</span>
+        //   </div>
+        //   ${order.orderItems.map(oi => `
+        //     <div class="item-row">
+        //       <span>${oi.item.name}</span>
+        //       <span>${oi.quantity}</span>
+        //       <span>₹${oi.priceAtOrder}</span>
+        //       <span>₹${oi.priceAtOrder * oi.quantity}</span>
+        //     </div>
+        //   `).join("")}
+        // </div>
+
+        //             </div>
+        //             `;
+        //                 });
+
+        //                 html += `</div>`;
+        //                 mainContent.innerHTML = html;
+
+        //                 // Add event listeners
+        //                 document.querySelectorAll(".cancel-btn").forEach(btn => {
+        //                     btn.addEventListener("click", async (e) => {
+        //                         const orderId = e.target.getAttribute("data-id");
+
+        //                         if (confirm(`Cancel Order #${orderId}?`)) {
+        //                             try {
+        //                                 const response = await fetch(`http://localhost:3010/api/orders/${orderId}`, {
+        //                                     method: "DELETE",
+        //                                 });
+
+        //                                 if (response.ok) {
+        //                                     alert(`Order #${orderId} canceled.`);
+        //                                     fetchOrders(); // Refresh
+        //                                 } else {
+        //                                     const errorData = await response.json();
+        //                                     alert(`Failed to cancel: ${errorData.message || 'Unknown error'}`);
+        //                                 }
+        //                             } catch (error) {
+        //                                 console.error("Cancel failed:", error);
+        //                                 alert("Network error. Try again.");
+        //                             }
+        //                         }
+        //                     });
+        //                 });
+
+        //             } catch (err) {
+        //                 console.error("Failed to fetch orders:", err);
+        //                 mainContent.innerHTML = "<p style='color:red;'>Could not load orders. Try again later.</p>";
+        //             }
+        //         }
+
+        // async function fetchOrders() {
+        //     mainContent.innerHTML = "<h2>Loading Order List...</h2>";
+
+        //     try {
+        //         const res = await fetch(`http://localhost:3010/api/orders`);
+        //         const orders = await res.json();
+
+        //         if (!Array.isArray(orders) || orders.length === 0) {
+        //             mainContent.innerHTML = "<h3>No orders found.</h3>";
+        //             return;
+        //         }
+
+        //         let html = `<h2>Your Orders</h2>`;
+
+        //         orders.forEach(order => {
+        //             // Hardcoded status for demonstration — you can replace with actual order.status
+        //             const status = "Dispatched";
+
+        //             html += `
+        //     <div class="order-wrapper" data-order-id="${order.id}">
+        //       <div class="order-status">${status}</div>
+        //       <div class="order-container">
+        //         <div class="order-left">
+        //           ${order.orderItems.map(item => `
+        //             <div class="item-box">
+        //               <img src="${item.item.imageUrl || "https://via.placeholder.com/50"}" alt="${item.item.name}" />
+        //               <div class="item-info">
+        //                 <p class="arrival">Expected on ${new Date(order.orderDate).toLocaleDateString()}</p>
+        //                 <p class="time-slot">7am - 7pm</p>
+        //               </div>
+        //             </div>
+        //           `).join("")}
+        //         </div>
+        //         <div class="order-right">
+        //           <button class="track-btn">Track order</button>
+        //           <a href="#" class="link">View order details</a>
+        //           <a href="#" class="link">Get invoice</a>
+        //           <a href="#" class="link">Edit order</a>
+        //           <button class="cancel-btn" data-id="${order.id}">Cancel</button>
+        //         </div>
+        //       </div>
+        //     </div>
+        //     `;
+        //         });
+
+        //         mainContent.innerHTML = html;
+
+        //         // Add event listeners for cancel buttons
+        //         document.querySelectorAll(".cancel-btn").forEach(btn => {
+        //             btn.addEventListener("click", async (e) => {
+        //                 const orderId = e.target.getAttribute("data-id");
+
+        //                 if (confirm(`Cancel Order #${orderId}?`)) {
+        //                     try {
+        //                         const response = await fetch(`http://localhost:3010/api/orders/${orderId}`, {
+        //                             method: "DELETE",
+        //                         });
+
+        //                         if (response.ok) {
+        //                             alert(`Order #${orderId} canceled.`);
+        //                             fetchOrders(); // Refresh order list
+        //                         } else {
+        //                             const errorData = await response.json();
+        //                             alert(`Failed to cancel: ${errorData.message || 'Unknown error'}`);
+        //                         }
+        //                     } catch (error) {
+        //                         console.error("Cancel failed:", error);
+        //                         alert("Network error. Try again.");
+        //                     }
+        //                 }
+        //             });
+        //         });
+
+        //     } catch (err) {
+        //         console.error("Failed to fetch orders:", err);
+        //         mainContent.innerHTML = "<p style='color:red;'>Could not load orders. Try again later.</p>";
+        //     }
+        // }
+
+        async function fetchOrders() {
+            mainContent.innerHTML = "<h2>Loading Order List...</h2>";
+
+            try {
+                const res = await fetch(`http://localhost:3010/api/orders`);
+                const orders = await res.json();
+
+                if (!Array.isArray(orders) || orders.length === 0) {
+                    mainContent.innerHTML = "<h3>No orders found.</h3>";
+                    return;
+                }
+
+                let html = `<h2>Your Orders</h2><div class="order-list">`;
+
+
+                orders.forEach(order => {
+                    const status = "Dispatched";  // Hardcoded for now
+
+                    html += `
+            <div class="order-wrapper" data-order-id="${order.id}">
+              <div class="order-header">
+                <div class="order-status">${status}</div>
+                <div class="order-total">Total: ₹${order.totalAmount}</div>
+              </div>
+              <div class="order-container">
+                <div class="order-left">
+                  ${order.orderItems.map(item => `
+                    <div class="item-box">
+                      <img src="${item.item.imageUrl || "https://via.placeholder.com/50"}" alt="${item.item.name}" />
+                      <div class="item-info">
+                        <p class="arrival">${item.item.name} ${item.quantity > 1 ? `&times;${item.quantity}` : ''}</p>
+                        <p class="time-slot">Expected on ${new Date(order.orderDate).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+                <div class="order-right">
+                  <button class="track-btn">Track order</button>
+                  <a href="#" class="invoice-btn">Get invoice</a>
+                  <button class="cancel-btn" data-id="${order.id}">Cancel</button>
+                </div>
+              </div>
+            </div>
+            `;
+                });
+
+                mainContent.innerHTML = html;
+
+                document.querySelectorAll(".cancel-btn").forEach(btn => {
+                    btn.addEventListener("click", async (e) => {
+                        const orderId = e.target.getAttribute("data-id");
+
+                        if (confirm(`Cancel Order #${orderId}?`)) {
+                            try {
+                                const response = await fetch(`http://localhost:3010/api/orders/${orderId}`, {
+                                    method: "DELETE",
+                                });
+
+                                if (response.ok) {
+                                    alert(`Order #${orderId} canceled.`);
+                                    fetchOrders();
+                                } else {
+                                    const errorData = await response.json();
+                                    alert(`Failed to cancel: ${errorData.message || 'Unknown error'}`);
+                                }
+                            } catch (error) {
+                                console.error("Cancel failed:", error);
+                                alert("Network error. Try again.");
+                            }
+                        }
+                    });
+                });
+
+            } catch (err) {
+                console.error("Failed to fetch orders:", err);
+                mainContent.innerHTML = "<p style='color:red;'>Could not load orders. Try again later.</p>";
+            }
+        }
+
+
+
+        function showUpdateForm() {
+            mainContent.innerHTML = `
+  <div class="form-wrapper">
+    <div>
+      <h2 style="text-align:center; margin-bottom: 20px;">Update Profile</h2>
+      <div id="updateStatus" style="margin: 10px 0; font-weight: 500; text-align: center;"></div>
+      <form id="updateForm">
+        <label for="name">Name:</label><br />
+        <input id="name" name="name" type="text" class="input" required /><br /><br />
+        
+        <label for="email">Email:</label><br />
+        <input id="email" name="email" type="email" class="input" required /><br /><br />
+        
+        <label for="phone">Phone:</label><br />
+        <input id="phone" name="phone" type="text" class="input" required /><br /><br />
+        
+        <label for="address">Address:</label><br />
+        <textarea id="address" name="address" rows="4" class="input" required></textarea><br /><br />
+        
+        <button type="submit" class="submit-btn">Save Changes</button>
+      </form>
+    </div>
+  </div>
+`;
+
+
+
+            // Load current customer data
+            fetch(`http://localhost:3010/api/customers/${customerId}`)
+                .then(res => res.json())
+                .then(customer => {
+                    document.getElementById("name").value = customer.name || "";
+                    document.getElementById("email").value = customer.email || "";
+                    document.getElementById("phone").value = customer.phoneNumber || "";
+                    document.getElementById("address").value = customer.address || "";
+                })
+                .catch(err => {
+                    document.getElementById("updateStatus").innerText = "Failed to load profile.";
+                    console.error("Error fetching profile:", err);
+                });
+
+            // Handle form submission
+            document.getElementById("updateForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const status = document.getElementById("updateStatus");
+                status.style.color = "#333";
+                status.innerText = "Updating...";
+
+                const updatedCustomer = {
+                    id: customerId,
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    phoneNumber: document.getElementById("phone").value,
+                    address: document.getElementById("address").value,
+                };
+
+                try {
+                    const res = await fetch(`http://localhost:3010/api/customers/${customerId}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updatedCustomer),
+                    });
+
+                    if (res.ok) {
+                        status.innerText = "Profile updated successfully!";
+                        status.style.color = "green";
+                    } else {
+                        const errText = await res.text();
+                        throw new Error(errText);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    status.innerText = "Failed to update profile.";
+                    status.style.color = "red";
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
