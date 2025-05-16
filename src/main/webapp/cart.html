@@ -2,281 +2,332 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shopping Cart</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Shopping Cart</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+	<!-- Lucide Icons CDN -->
+	<script src="https://unpkg.com/lucide@latest"></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f4f6fa;
-      color: #333;
-    }
+		body {
+			font-family: 'Inter', sans-serif;
+			background-color: #f4f6fa;
+			color: #333;
+		}
 
-    nav {
-      background-color: #4e54c8;
-      color: white;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+		nav {
+			background-color: #4e54c8;
+			color: white;
+			padding: 15px 30px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		}
 
-    .nav-left h1 {
-      font-size: 24px;
-      font-weight: 600;
-    }
+		.nav-left h1 {
+			font-size: 24px;
+			font-weight: 600;
+		}
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+		.nav-right {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
 
-    .nav-icon {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: white;
-      color: #4e54c8;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
+		.nav-icon {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			background: white;
+			color: #4e54c8;
+			padding: 8px 12px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: 500;
+			transition: background 0.2s;
+		}
 
-    .nav-icon:hover {
-      background: #e1e4f0;
-    }
+		.nav-icon:hover {
+			background: #e1e4f0;
+		}
 
-    .cart-container {
-      padding: 40px 30px;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-    }
+		.cart-container {
+			padding: 40px 30px;
+			max-width: 1000px;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+		}
 
-    .cart-items {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      margin-bottom: 20px;
-    }
+		.cart-items {
+			background: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+			margin-bottom: 20px;
+		}
 
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid #ddd;
-    }
+		.cart-item {
+			display: flex;
+			justify-content: space-between;
+			padding: 15px 0;
+			border-bottom: 1px solid #ddd;
+		}
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
+		.cart-item:last-child {
+			border-bottom: none;
+		}
 
-    .cart-item h4 {
-      font-size: 16px;
-    }
+		.cart-item h4 {
+			font-size: 16px;
+		}
 
-    .cart-item button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+		.cart-item button {
+			background-color: #f44336;
+			color: white;
+			border: none;
+			padding: 6px 12px;
+			border-radius: 6px;
+			cursor: pointer;
+		}
 
-    .cart-item button:hover {
-      background-color: #d32f2f;
-    }
+		.cart-item button:hover {
+			background-color: #d32f2f;
+		}
 
-    .total-price {
-      text-align: right;
-      margin-top: 20px;
-      font-size: 20px;
-      font-weight: 600;
-    }
+		.total-price {
+			text-align: right;
+			margin-top: 20px;
+			font-size: 20px;
+			font-weight: 600;
+		}
 
-    .checkout-btn {
-      background-color: #4e54c8;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 30px;
-      width: 100%;
-      font-size: 18px;
-    }
+		.checkout-btn {
+			background-color: #4e54c8;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			margin-top: 30px;
+			width: 100%;
+			font-size: 18px;
+		}
 
-    .checkout-btn:hover {
-      background-color: #3e42a1;
-    }
+		.checkout-btn:hover {
+			background-color: #3e42a1;
+		}
 
-    .nav-icon a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: inherit;
-      text-decoration: none;
-    }
-  </style>
+		.nav-icon a {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			color: inherit;
+			text-decoration: none;
+		}
+	</style>
 </head>
 
 <body>
 
-  <!-- Navigation Bar -->
-  <nav>
-    <div class="nav-left">
-      <h1>Inventory</h1>
-    </div>
-    <div class="nav-right">
-      <div class="nav-icon">
-        <a href="profile.html"> <i data-lucide="user"></i> <span>Profile</span>
-        </a>
-      </div>
-      <div class="nav-icon">
-        <a href="cart.html"> <i data-lucide="shopping-cart"></i> <span>Cart</span>
-        </a>
-      </div>
-    </div>
-  </nav>
+	<!-- Navigation Bar -->
+	<nav>
+		<div class="nav-left">
+			<h1>Inventory</h1>
+		</div>
+		<div class="nav-right">
+			<div class="nav-icon">
+				<a href="profile.html"> <i data-lucide="user"></i> <span>Profile</span>
+				</a>
+			</div>
+			<div class="nav-icon">
+				<a href="cart.html"> <i data-lucide="shopping-cart"></i> <span>Cart</span>
+				</a>
+			</div>
+		</div>
+	</nav>
 
-  <!-- Cart Page -->
-  <div class="cart-container">
-    <h2>Your Cart</h2>
-    <div class="cart-items" id="cartItems"></div>
-    <div class="total-price" id="totalPrice">Total: ₹0</div>
-    <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
-  </div>
+	<!-- Cart Page -->
+	<div class="cart-container">
+		<h2>Your Cart</h2>
+		<div class="cart-items" id="cartItems"></div>
+		<div class="total-price" id="totalPrice">Total: ₹0</div>
+		<button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+	</div>
 
-  <!-- Modal -->
-  <div id="checkoutModal" style="display: none; position: fixed; top: 0; left: 0; 
+	<!-- Modal -->
+	<div id="checkoutModal" style="display: none; position: fixed; top: 0; left: 0; 
   width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); 
   justify-content: center; align-items: center; z-index: 9999;">
-    <div style="background-color: white; padding: 30px 40px; border-radius: 10px; text-align: center;">
-      <h2>Order placed successfully!</h2>
-      <button onclick="closeModal()"
-        style="margin-top: 20px; padding: 10px 20px; background-color: #4e54c8; color: white; border: none; border-radius: 6px; cursor: pointer;">OK</button>
-    </div>
-  </div>
+		<div style="background-color: white; padding: 30px 40px; border-radius: 10px; text-align: center;">
+			<h2>Order placed successfully!</h2>
+			<button onclick="closeModal()"
+				style="margin-top: 20px; padding: 10px 20px; background-color: #4e54c8; color: white; border: none; border-radius: 6px; cursor: pointer;">OK</button>
+		</div>
+	</div>
 
 
-  <!-- Script -->
-  <script>
-    lucide.createIcons();
+	<!-- Script -->
+	<script>
+		lucide.createIcons();
 
-    const customerId = localStorage.getItem("customerId");
-    let cart = [];
+		const customerId = localStorage.getItem("customerId");
+		let cart = [];
 
-    async function fetchCartItems() {
-      try {
-        const response = await fetch(`http://localhost:3010/api/cart/${customerId}/items`);
-        if (!response.ok) throw new Error("Failed to load cart items");
+		async function fetchCartItems() {
+			try {
+				const response = await fetch(`http://localhost:3010/api/cart/${customerId}/items`);
+				if (!response.ok) throw new Error("Failed to load cart items");
 
-        cart = await response.json();
-        renderCartItems();
-      } catch (err) {
-        console.error("Error:", err);
-        document.getElementById("cartItems").innerHTML = "<p>Error loading cart items.</p>";
-      }
-    }
+				cart = await response.json();
+				renderCartItems();
+			} catch (err) {
+				console.error("Error:", err);
+				document.getElementById("cartItems").innerHTML = "<p>Error loading cart items.</p>";
+			}
+		}
 
-    function renderCartItems() {
-      const cartItemsContainer = document.getElementById("cartItems");
-      cartItemsContainer.innerHTML = "";
+		function renderCartItems() {
+			const cartItemsContainer = document.getElementById("cartItems");
+			cartItemsContainer.innerHTML = "";
 
-      let total = 0;
+			let total = 0;
 
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-        document.getElementById("totalPrice").innerText = "Total: ₹0";
-        return;
-      }
+			if (cart.length === 0) {
+				cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+				document.getElementById("totalPrice").innerText = "Total: ₹0";
+				return;
+			}
 
-      cart.forEach(ci => {
-        const item = ci.item;
-        const price = item.price * ci.quantity;
-        total += price;
+			cart.forEach(ci => {
+				const item = ci.item;
+				const price = item.price * ci.quantity;
+				total += price;
 
-        const cartItemDiv = document.createElement("div");
-        cartItemDiv.classList.add("cart-item");
+				const cartItemDiv = document.createElement("div");
+				cartItemDiv.classList.add("cart-item");
 
-        cartItemDiv.innerHTML = `
-          <h4>${item.name} - ₹${item.price} x ${ci.quantity}</h4>
-          <button onclick="removeItemFromCart(${ci.id})">Remove</button>
-        `;
-
-        cartItemsContainer.appendChild(cartItemDiv);
-      });
-
-      document.getElementById("totalPrice").innerText = `Total: ₹${total}`;
-    }
-
-    async function removeItemFromCart(cartItemId) {
-      try {
-        const res = await fetch(`http://localhost:3010/api/cart/item/${cartItemId}`, {
-          method: "DELETE"
-        });
-        if (!res.ok) throw new Error("Failed to remove item");
-        cart = cart.filter(item => item.id !== cartItemId);
-        renderCartItems();
-      } catch (err) {
-        console.error("Error removing item:", err);
-      }
-    }
+				cartItemDiv.innerHTML = `
+		  <h4>${item.name} - ₹${item.price}</h4>
+		  <div style="display: flex; align-items: center; gap: 10px;">
+		    <button onclick="updateQuantity(${ci.id}, ${ci.quantity - 1})"
+		      style="padding: 5px 10px; background-color: #ccc; border: none; border-radius: 4px; cursor: pointer;">−</button>
+		    <span>${ci.quantity}</span>
+		    <button onclick="updateQuantity(${ci.id}, ${ci.quantity + 1})"
+		      style="padding: 5px 10px; background-color: #4e54c8; color: white; border: none; border-radius: 4px; cursor: pointer;">+</button>
+		  </div>
+		`;
 
 
-    async function proceedToCheckout() {
-      if (cart.length === 0) {
-        alert("Your cart is empty. Add items before checkout.");
-        return;
-      }
+				cartItemsContainer.appendChild(cartItemDiv);
+			});
 
-      try {
-        const response = await fetch(`http://localhost:3010/api/orders/checkout/${customerId}`, {
-          method: "POST"
-        });
+			document.getElementById("totalPrice").innerText = `Total: ₹${total}`;
+		}
 
-        const data = await response.json();
-
-        if (response.ok) {
-          document.getElementById("checkoutModal").style.display = "flex";
-        } else {
-          alert(data.error || "Checkout failed.");
-        }
-      } catch (err) {
-        console.error("Checkout error:", err);
-        alert("An error occurred during checkout.");
-      }
-    }
-
-    function closeModal() {
-      document.getElementById("checkoutModal").style.display = "none";
-      cart = [];
-      renderCartItems();
-    }
+		async function removeItemFromCart(cartItemId) {
+			try {
+				const res = await fetch(`http://localhost:3010/api/cart/item/${cartItemId}`, {
+					method: "DELETE"
+				});
+				if (!res.ok) throw new Error("Failed to remove item");
+				cart = cart.filter(item => item.id !== cartItemId);
+				renderCartItems();
+			} catch (err) {
+				console.error("Error removing item:", err);
+			}
+		}
 
 
-    fetchCartItems();
-  </script>
+		async function proceedToCheckout() {
+			if (cart.length === 0) {
+				alert("Your cart is empty. Add items before checkout.");
+				return;
+			}
+
+			try {
+				const response = await fetch(`http://localhost:3010/api/orders/checkout/${customerId}`, {
+					method: "POST"
+				});
+
+				const data = await response.json();
+
+				if (response.ok) {
+					document.getElementById("checkoutModal").style.display = "flex";
+				} else {
+					alert(data.error || "Checkout failed.");
+				}
+			} catch (err) {
+				console.error("Checkout error:", err);
+				alert("An error occurred during checkout.");
+			}
+		}
+
+		function closeModal() {
+			document.getElementById("checkoutModal").style.display = "none";
+			cart = [];
+			renderCartItems();
+		}
+
+		async function updateQuantity(cartItemId, newQty) {
+			const cartItem = cart.find(item => item.id === cartItemId);
+			if (!cartItem) return alert("Item not found.");
+
+			const availableStock = cartItem.item.quantity; // total stock
+			const customerId = localStorage.getItem("customerId");
+
+			if (newQty > availableStock) {
+				alert(`Only ${availableStock} units available in stock.`);
+				return;
+			}
+
+			if (newQty < 1) {
+				const confirmed = confirm("Quantity is zero. Remove item from cart?");
+				if (!confirmed) return;
+				return removeItemFromCart(cartItemId);
+			}
+
+			const deltaQty = newQty - cartItem.quantity;
+			if (deltaQty === 0) return;
+
+			try {
+				const res = await fetch("http://localhost:3010/api/cart/add", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						customerId: parseInt(customerId),
+						items: [{itemId: cartItem.item.id, quantity: deltaQty}]
+					})
+				});
+
+				if (!res.ok) throw new Error("Failed to update quantity");
+
+				cartItem.quantity = newQty;
+				renderCartItems();
+			} catch (err) {
+				console.error("Quantity update error:", err);
+				alert("Could not update quantity.");
+			}
+		}
+
+
+
+		fetchCartItems();
+	</script>
 </body>
 
 </html>

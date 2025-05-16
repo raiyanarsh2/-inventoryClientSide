@@ -237,29 +237,33 @@
 				container.innerHTML = ""; // Clear existing content
 
 				products.forEach(p => {
-					const div = document.createElement("div");
-					div.className = "product-card";
 
-					const title = document.createElement("h3");
-					title.textContent = p.name;
+					if (p.quantity > 0) {
 
-					const vendorTag = document.createElement("div");
-					vendorTag.className = "vendor-tag";
-					vendorTag.textContent = p.vendorName;
+						const div = document.createElement("div");
+						div.className = "product-card";
 
-					const desc = document.createElement("p");
-					desc.textContent = p.description;
+						const title = document.createElement("h3");
+						title.textContent = p.name;
 
-					const price = document.createElement("p");
-					price.className = "price";
-					price.textContent = "₹" + p.price;
+						const vendorTag = document.createElement("div");
+						vendorTag.className = "vendor-tag";
+						vendorTag.textContent = p.vendorName;
 
-					const button = document.createElement("button");
-					button.textContent = "Add to Cart";
-					button.onclick = () => addToCart(p.id);
+						const desc = document.createElement("p");
+						desc.textContent = p.description;
 
-					div.append(title, vendorTag, desc, price, button);
-					container.appendChild(div);
+						const price = document.createElement("p");
+						price.className = "price";
+						price.textContent = "₹" + p.price;
+
+						const button = document.createElement("button");
+						button.textContent = "Add to Cart";
+						button.onclick = () => addToCart(p.id);
+
+						div.append(title, vendorTag, desc, price, button);
+						container.appendChild(div);
+					}
 				});
 
 			} catch (error) {
@@ -285,7 +289,7 @@
 					},
 					body: JSON.stringify({
 						customerId: parseInt(customerId),
-						items: [{ itemId: itemId, quantity: 1 }] // Send one item at a time
+						items: [{itemId: itemId, quantity: 1}] // Send one item at a time
 					})
 				});
 
